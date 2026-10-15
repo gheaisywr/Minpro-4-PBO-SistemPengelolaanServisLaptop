@@ -64,7 +64,7 @@ mengurangi kesalahan ketika pengguna memasukkan data.
 
 ------------------------------------------------------------------------
 
-## 2. Struktur Package dan MVC (Nilai Tambah)
+## 2. Struktur Package dan MVC 
 
 Program menggunakan struktur **MVC (Model-View-Controller)** agar bagian data, tampilan, dan proses program dapat dipisahkan. Pada Mini Project 4, ditambahkan package `database` dan `dao` untuk mengelola koneksi serta akses data ke database MySQL.
 
@@ -877,7 +877,7 @@ pelanggan
  perangkat
 ```
 
-### 11.5 Dummy Data
+### 12.5 Dummy Data
 
 Dummy data dimasukkan melalui file SQL, bukan ditulis langsung di kode Java. Data awal mencakup pelanggan, perangkat, dan servis yang saling berhubungan untuk membantu pengujian program.
 
@@ -919,28 +919,6 @@ mysql> SELECT * FROM servis;
 3 rows in set (0.01 sec)
 ```
 
-```java
-package com.mycompany.servislaptop;
-
-import controller.ServisController;
-import java.util.Scanner;
-import view.MenuView;
-import dao.PelangganDAO;
-
-public class ServisLaptop {
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        ServisController controller = new ServisController();
-        MenuView menu = new MenuView(input, controller);
-
-        menu.tampilkanMenu();
-        input.close();
-
-        PelangganDAO pelangganDAO = new PelangganDAO();
-        pelangganDAO.tampilkanSemuaPelanggan();
-    }
-}
-```
 
 <img width="406" height="176" alt="Screenshot 2026-10-10 233503" src="https://github.com/user-attachments/assets/25ce7f79-9adf-47d0-9475-228fce8c852d" />
 
@@ -1533,20 +1511,6 @@ Status servis terdiri dari:
 3. Selesai
 ```
 
-Setelah semua data dinyatakan valid, program membuat object `Pelanggan`,
-`Perangkat`, dan `Servis`.
-
-
-Pengguna memilih menu **1. Tambah Data Servis**, lalu memasukkan data pelanggan, memilih jenis perangkat, memasukkan data perangkat, dan mengisi informasi servis.
-
-Status servis yang tersedia:
-
-```text
-1. Menunggu
-2. Diproses
-3. Selesai
-```
-
 Setelah input divalidasi, controller memanggil DAO untuk menyimpan data ke database. `ServisDAO` menangani penambahan data yang saling berhubungan menggunakan transaksi database.
 
 <img width="191" height="394" alt="image" src="https://github.com/user-attachments/assets/d711d56f-a4f0-4a17-bd79-cdca68fb4167" />
@@ -1750,31 +1714,13 @@ Data servis berhasil diubah.
 
 Menu **4. Hapus Data Servis** digunakan untuk menghapus data servis berdasarkan ID servis. Sebelum penghapusan, program meminta konfirmasi:
 
-Program terlebih dahulu mencari data berdasarkan ID.
+Program terlebih dahulu mencari data berdasarkan ID. Program juga melakukan validasi agar pengguna hanya memasukkan `y` atau
+`n`.
 
 Jika data ditemukan, data tersebut ditampilkan dan pengguna diminta
 melakukan konfirmasi.
 
-``` text
-Yakin ingin menghapus? (y/n):
-```
-
-Jika pengguna memilih `y`, data akan dihapus:
-
-``` java
-daftarServis.remove(servis);
-```
-
 Jika pengguna memilih `n`, penghapusan dibatalkan.
-
-Program juga melakukan validasi agar pengguna hanya memasukkan `y` atau
-`n`.
-
-```text
-Yakin ingin menghapus? (y/n):
-```
-
-Jika pengguna memilih `y`, DAO menghapus data dari database. Jika memilih `n`, penghapusan dibatalkan.
 
 ```text
 Pilih menu: 4
@@ -1809,6 +1755,15 @@ Yakin ingin menghapus? (y/n): n
 Penghapusan dibatalkan.
 ```
 
+
+``` text
+Yakin ingin menghapus? (y/n):
+```
+Jika pengguna memilih `y`, data akan dihapus:
+
+``` java
+daftarServis.remove(servis);
+```
 ```text
 Yakin ingin menghapus? (y/n): y
 Data servis berhasil dihapus.
@@ -2014,7 +1969,7 @@ ID Servis sudah digunakan!
 
 ## 20. Perulangan Program
 
-Program menggunakan perulangan pada menu utama agar pengguna dapat menjalankan beberapa fitur tanpa menjalankan ulang program setiap kali selesai melakukan satu proses. Menu terus ditampilkan sampai pengguna memilih **6. Keluar**.
+Program menggunakan perulangan pada menu utama agar pengguna dapat menjalankan beberapa fitur tanpa menjalankan ulang program setiap kali selesai melakukan satu proses. Menu terus ditampilkan sampai pengguna memilih **6. Keluar**. ArrayList digunakan untuk menampung hasil pengambilan data dari database melalui DAO.
 
 Perulangan juga digunakan dalam proses validasi agar pengguna dapat memasukkan kembali data jika input tidak sesuai.
 
