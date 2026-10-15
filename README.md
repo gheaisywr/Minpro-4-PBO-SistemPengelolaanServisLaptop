@@ -2170,21 +2170,7 @@ Program akan terus menampilkan menu sampai pengguna memilih **6. Keluar**.
 
 ------------------------------------------------------------------------
 
-## 25. Teknologi yang Digunakan
-
-- **Bahasa Pemrograman:** Java
-- **IDE:** NetBeans
-- **Database:** MySQL
-- **Pengelolaan Database:** Laragon
-- **Koneksi Database:** JDBC
-- **Pengolahan Query:** `PreparedStatement`
-- **Pengelolaan Akses Data:** DAO
-- **Arsitektur Program:** MVC
-- **Antarmuka:** Command Line Interface (CLI)
-
-------------------------------------------------------------------------
-
-## 26. Cara Menjalankan Program
+## 25. Cara Menjalankan Program
 
 1. Pastikan Java dan NetBeans sudah terpasang.
 2. Jalankan Laragon dan pastikan layanan MySQL aktif.
@@ -2200,7 +2186,7 @@ Nama database, port, username, dan password pada konfigurasi koneksi harus sesua
 
 ------------------------------------------------------------------------
 
-## 27. Kesimpulan
+## 26. Kesimpulan
 
 **Sistem Pengelolaan Servis Laptop** dapat digunakan untuk membantu proses pencatatan dan pengelolaan data pelanggan, perangkat, serta servis melalui terminal.
 
