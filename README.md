@@ -21,22 +21,43 @@ Pada Mini Project 4, program dikembangkan dengan menambahkan database MySQL meng
 
 ### Sistem Pengelolaan Servis Laptop
 
-Program ini digunakan untuk membantu mencatat dan mengelola data pelanggan, perangkat, serta servis. Program dijalankan melalui terminal. Pengguna dapat menambah, menampilkan, mengubah, menghapus, dan mencari data servis berdasarkan ID servis.
+Program yang dibuat adalah Sistem Pengelolaan Servis Laptop. Program ini digunakan untuk membantu mencatat dan mengelola data pelanggan, data perangkat, serta data servis dalam satu sistem sederhana.
 
-Perangkat yang dapat dipilih terdiri dari dua jenis, yaitu **Laptop** dan **Komputer**. Keduanya merupakan turunan dari class `Perangkat`.
+Program dijalankan melalui Command Line Interface (CLI) atau terminal. Melalui menu yang tersedia, pengguna dapat menambahkan data servis, melihat data yang sudah tersimpan, mengubah data servis, menghapus data servis, dan mencari data berdasarkan ID servis.
 
-Pada Mini Project 3, data disimpan menggunakan `ArrayList`. Pada Mini Project 4, penyimpanan data dikembangkan menggunakan database MySQL dengan bantuan JDBC dan DAO.
+Pada pengembangan terbaru, perangkat yang dapat dipilih terdiri dari dua jenis, yaitu Laptop dan Komputer. Keduanya merupakan turunan dari class Perangkat.
+
+Dalam pembuatannya, program menggunakan konsep Pemrograman Berorientasi Objek (PBO). Data dan proses program dibagi ke dalam beberapa class agar setiap class memiliki tugas yang lebih jelas.
+
+Pada Mini Project 4, penyimpanan data dikembangkan menggunakan database MySQL melalui JDBC (Java Database Connectivity) dan pola DAO (Data Access Object). Dengan demikian, data pelanggan, perangkat, dan servis dapat disimpan secara permanen di database serta diakses kembali ketika program dijalankan ulang.
 
 ### Fitur Program
 
-1. **Tambah Data Servis** — memasukkan data pelanggan, perangkat, dan servis ke database.
-2. **Tampilkan Data Servis** — melihat seluruh data servis yang tersimpan.
-3. **Ubah Data Servis** — mengubah tanggal, status, dan biaya servis berdasarkan ID servis.
-4. **Hapus Data Servis** — menghapus data servis setelah konfirmasi pengguna.
-5. **Cari Data Servis** — mencari data berdasarkan ID servis.
-6. **Keluar** — mengakhiri program.
+Program ini memiliki beberapa fitur utama, yaitu:
 
-Program juga memiliki validasi input untuk mengurangi kesalahan saat pengguna memasukkan data.
+1.  **Tambah Data Servis**\
+    Digunakan untuk memasukkan data pelanggan, data perangkat, dan
+    informasi servis.
+
+2.  **Tampilkan Data Servis**\
+    Digunakan untuk melihat seluruh data servis yang sudah tersimpan.
+
+3.  **Ubah Data Servis**\
+    Digunakan untuk mengubah tanggal, status, dan biaya servis
+    berdasarkan ID servis.
+
+4.  **Hapus Data Servis**\
+    Digunakan untuk menghapus data servis. Sebelum data dihapus,
+    pengguna akan diminta melakukan konfirmasi.
+
+5.  **Cari Data Servis**\
+    Digunakan untuk mencari data servis berdasarkan ID servis.
+
+6.  **Keluar**\
+    Digunakan untuk mengakhiri penggunaan program.
+
+Selain fitur tersebut, program juga memiliki validasi input untuk
+mengurangi kesalahan ketika pengguna memasukkan data.
 
 <img width="190" height="140" alt="image" src="https://github.com/user-attachments/assets/806f752d-7d52-4c09-8b11-2bf5b6e6707f" />
 
@@ -143,13 +164,21 @@ DAO (*Data Access Object*) memisahkan proses akses database dari controller agar
 
 #### Main Program
 
-Class `ServisLaptop` merupakan titik awal ketika program dijalankan.
+Class `ServisLaptop` digunakan sebagai titik awal ketika
+program dijalankan. Class ini membuat object `MenuView` kemudian
+menjalankan program.
+
+<img width="154" height="27" alt="image" src="https://github.com/user-attachments/assets/9a9feb7e-6e22-4afb-9a71-e2f9d49eabb5" />
+
+Dengan pembagian tersebut, setiap bagian program memiliki tugas yang
+lebih jelas dan program menjadi lebih terorganisir.
+
 
 ------------------------------------------------------------------------
 
 ## 3. Struktur Class
 
-Class yang digunakan dalam program:
+### Class yang digunakan dalam program:
 
 - **Perangkat** — superclass yang menyimpan data umum perangkat.
 - **Laptop** — subclass dari `Perangkat` untuk laptop.
@@ -164,7 +193,11 @@ Class yang digunakan dalam program:
 - **PelangganDAO**, **PerangkatDAO**, dan **ServisDAO** — mengelola akses data.
 - **ServisLaptop** — class utama program.
 
-Hubungan inheritance:
+### Interface yang Digunakan dalam program:
+
+-   **InformasiPerangkat** → interface untuk informasi perangkat.
+
+Hubungan inheritance pada program dapat digambarkan sebagai berikut:
 
 ```text
                  Perangkat
@@ -182,6 +215,15 @@ Hubungan inheritance:
 ### 4.1 `Perangkat`
 
 Class `Perangkat` merupakan **abstract class** yang menjadi dasar bagi `Laptop` dan `Komputer`. Class ini menyimpan data umum seperti ID perangkat, merek, tipe, dan kerusakan, serta mengimplementasikan interface `InformasiPerangkat`.
+
+Atribut yang terdapat pada class `Perangkat` yaitu:
+
+-   `idPerangkat`
+-   `merk`
+-   `tipe`
+-   `kerusakan`
+
+Contoh:
 
 ```java
 package model;
@@ -230,6 +272,37 @@ public abstract class Perangkat implements InformasiPerangkat {
 
 Class `Laptop` merupakan subclass dari `Perangkat` dan memiliki atribut khusus `ukuranLayar`. Constructor menggunakan `super()` untuk memanggil constructor dari `Perangkat`. Class ini melakukan overriding pada method `tampilkanInfo()`.
 
+Class `Laptop` merupakan subclass dari `Perangkat`.
+
+``` java
+public class Laptop extends Perangkat {
+```
+
+Class `Laptop` memiliki atribut khusus `ukuranLayar` yang membedakannya
+dari jenis perangkat lainnya.
+
+Constructor `Laptop` menggunakan `super()` untuk memanggil constructor
+dari class `Perangkat`.
+
+``` java
+super(idPerangkat, merk, tipe, kerusakan);
+```
+
+Class `Laptop` juga melakukan **method overriding** pada method
+`tampilkanInfo()`.
+
+``` java
+@Override
+public void tampilkanInfo() {
+    System.out.println("Jenis        : Laptop");
+    System.out.println("ID Laptop    : " + getIdPerangkat());
+    System.out.println("Merk         : " + getMerk());
+    System.out.println("Tipe         : " + getTipe());
+    System.out.println("Kerusakan    : " + getKerusakan());
+    System.out.println("Ukuran Layar (Inci) : " + ukuranLayar + " Inci");
+}
+```
+
 <img width="639" height="324" alt="image" src="https://github.com/user-attachments/assets/c405db81-da7b-4ab6-a381-aa88d5ce1957" />
 
 
@@ -237,11 +310,43 @@ Class `Laptop` merupakan subclass dari `Perangkat` dan memiliki atribut khusus `
 
 Class `Komputer` merupakan subclass dari `Perangkat` dan memiliki atribut khusus `jenisCasing`. Class ini juga melakukan overriding pada method `tampilkanInfo()`.
 
+``` java
+public class Komputer extends Perangkat {
+```
+
+Class `Komputer` memiliki atribut khusus `jenisCasing`.
+
+Class ini juga melakukan overriding terhadap method `tampilkanInfo()`.
+
+``` java
+@Override
+public void tampilkanInfo() {
+    System.out.println("Jenis        : Komputer");
+    System.out.println("ID Komputer  : " + getIdPerangkat());
+    System.out.println("Merk         : " + getMerk());
+    System.out.println("Tipe         : " + getTipe());
+    System.out.println("Kerusakan    : " + getKerusakan());
+    System.out.println("Jenis Casing : " + jenisCasing);
+}
+```
+
 <img width="637" height="326" alt="image" src="https://github.com/user-attachments/assets/4c00dd2a-038b-4e0f-abaf-ada823f7da4a" />
+
+Dengan adanya atribut khusus tersebut, `Laptop` dan `Komputer` memiliki
+perbedaan yang jelas sebagai subclass dari `Perangkat`.
 
 ### 4.4 `Pelanggan`
 
 Class `Pelanggan` menyimpan `idPelanggan`, `nama`, `noTelepon`, dan `alamat`. Pada MP4, data pelanggan disimpan ke tabel `pelanggan` melalui `PelangganDAO`.
+
+Data yang disimpan terdiri dari:
+
+-   `idPelanggan`
+-   `nama`
+-   `noTelepon`
+-   `alamat`
+
+Contoh:
 
 ```java
 package model;
@@ -286,6 +391,17 @@ public class Pelanggan {
 ### 4.5 `Servis`
 
 Class `Servis` menyimpan `idServis`, `tanggal`, `status`, `biaya`, `pelanggan`, dan `perangkat`. Data servis disimpan ke tabel `servis` dan dihubungkan dengan data pelanggan serta perangkat.
+
+Atribut yang digunakan yaitu:
+
+-   `idServis`
+-   `tanggal`
+-   `status`
+-   `biaya`
+-   `pelanggan`
+-   `perangkat`
+
+Contoh:
 
 ```java
 package model;
@@ -370,21 +486,104 @@ public class Servis {
 }
 ```
 
+Object `Pelanggan` dan `Perangkat` disimpan di dalam object `Servis`
+sehingga satu data servis memiliki informasi pelanggan dan perangkat
+yang berkaitan.
+
 ------------------------------------------------------------------------
 
 ## 5. Inheritance
 
 Inheritance diterapkan dengan `Perangkat` sebagai superclass, sedangkan `Laptop` dan `Komputer` menjadi subclass. Data umum perangkat didefinisikan pada superclass, sedangkan setiap subclass memiliki atribut tambahan sesuai jenisnya.
 
+Inheritance diterapkan dengan hubungan:
+
+``` text
+Perangkat
+   ├── Laptop
+   └── Komputer
+```
+
+Class `Perangkat` menjadi superclass:
+
+``` java
+public abstract class Perangkat implements InformasiPerangkat {
+```
+
+Kemudian `Laptop` menjadi subclass:
+
+``` java
+public class Laptop extends Perangkat {
+```
+
+Dan `Komputer` menjadi subclass:
+
+``` java
+public class Komputer extends Perangkat {
+```
+
+Dengan penerapan inheritance, data umum seperti ID perangkat, merk,
+tipe, dan kerusakan cukup didefinisikan pada `Perangkat`.
+
 ------------------------------------------------------------------------
 
 ## 6. Polymorphism
 
-Program menerapkan polymorphism melalui **method overriding** dan **method overloading**.
+Polymorphism diterapkan melalui **method overriding** dan **method
+overloading**.
+
+Overriding diterapkan pada `tampilkanInfo()` di class `Laptop` dan
+`Komputer`, sedangkan overloading diterapkan pada class `Servis` melalui
+dua method `tampilkanInfo()` dengan parameter yang berbeda.
+
 
 ### Method Overriding
 
 Method `tampilkanInfo()` didefinisikan pada `Perangkat`, kemudian diimplementasikan oleh `Laptop` dan `Komputer`. Implementasi yang dijalankan menyesuaikan jenis object.
+Method `tampilkanInfo()` didefinisikan sebagai abstract method pada
+class `Perangkat`, kemudian diimplementasikan oleh `Laptop` dan
+`Komputer`.
+
+``` java
+@Override
+public void tampilkanInfo()
+```
+
+Pada saat program membuat perangkat, tipe object dapat berupa `Laptop`
+atau `Komputer`.
+
+Contohnya:
+
+``` java
+Perangkat perangkat;
+
+if (pilihanJenis == 1) {
+
+    String ukuranLayar =
+            validasi.inputTeks("Ukuran Layar (Inci): ");
+
+    perangkat = new Laptop(
+        idPerangkat,
+        merk,
+        tipe,
+        kerusakan,
+        ukuranLayar
+    );
+
+} else {
+
+    String jenisCasing =
+            validasi.inputTeks("Jenis Casing: ");
+
+    perangkat = new Komputer(
+        idPerangkat,
+        merk,
+        tipe,
+        kerusakan,
+        jenisCasing
+    );
+}
+```
 
 <img width="392" height="127" alt="image" src="https://github.com/user-attachments/assets/1b5c560d-4118-46e4-a813-8c463dabfb1a" />
 <img width="377" height="124" alt="image" src="https://github.com/user-attachments/assets/461cc812-f0db-4d0c-ad81-a16f5323f832" />
@@ -393,6 +592,30 @@ Method `tampilkanInfo()` didefinisikan pada `Perangkat`, kemudian diimplementasi
 ### Method Overloading
 
 Class `Servis` memiliki dua method `tampilkanInfo()` dengan parameter berbeda. Perbedaan parameter tersebut merupakan penerapan method overloading.
+Polymorphism melalui overloading diterapkan pada class `Servis`.
+
+Class `Servis` memiliki dua method dengan nama yang sama, yaitu
+`tampilkanInfo()`, tetapi memiliki parameter yang berbeda.
+
+Method pertama:
+
+``` java
+public void tampilkanInfo() {
+    tampilkanInfo(true);
+}
+```
+
+Method kedua:
+
+``` java
+public void tampilkanInfo(boolean tampilkanPelanggan) {
+    // isi method
+}
+```
+
+Perbedaan parameter tersebut menunjukkan penerapan **method overloading**.
+`Servis.java`
+
 
 <img width="389" height="368" alt="Screenshot 2026-10-15 202227" src="https://github.com/user-attachments/assets/008f6181-4f9f-4207-8eb3-b087deba3949" />
 <img width="186" height="59" alt="Screenshot 2026-10-15 202210" src="https://github.com/user-attachments/assets/5c2980d0-fbd0-47f3-a3e6-8487015e2d35" />
@@ -404,11 +627,69 @@ Class `Servis` memiliki dua method `tampilkanInfo()` dengan parameter berbeda. P
 
 Abstraction diterapkan menggunakan abstract class `Perangkat` dan abstract method `tampilkanInfo()`. Method tersebut wajib diimplementasikan oleh subclass.
 
+### Abstract Class
+
+Class `Perangkat` dibuat sebagai abstract class:
+
+``` java
+public abstract class Perangkat implements InformasiPerangkat
+```
+
+Class ini digunakan sebagai class dasar untuk `Laptop` dan `Komputer`.
+Karena bersifat abstract, class `Perangkat` tidak dibuat menjadi object
+secara langsung.
+
+### Abstract Method
+
+Class `Perangkat` memiliki abstract method:
+
+``` java
+public abstract void tampilkanInfo();
+```
+
+Method tersebut tidak memiliki isi pada class `Perangkat` dan wajib
+diimplementasikan oleh subclass.
+
+Class `Laptop` dan `Komputer` kemudian memberikan implementasi masing-
+masing melalui method overriding.
+
+`Perangkat.java`
+
+<img width="532" height="167" alt="image" src="https://github.com/user-attachments/assets/39a6c226-6990-42d5-aefc-d84098cf404b" />
+
+
 ------------------------------------------------------------------------
 
 ## 8. Interface
 
 Interface `InformasiPerangkat` memiliki method `tampilkanInfo()` dan diimplementasikan oleh abstract class `Perangkat`. Class turunannya memberikan implementasi sesuai jenis perangkat.
+
+``` java
+package interfaces;
+
+public interface InformasiPerangkat {
+
+    void tampilkanInfo();
+}
+```
+
+Interface tersebut kemudian diterapkan oleh abstract class `Perangkat`:
+
+``` java
+public abstract class Perangkat implements InformasiPerangkat
+```
+
+Dengan penerapan tersebut, `Perangkat` memiliki aturan untuk menyediakan
+method `tampilkanInfo()` yang kemudian diimplementasikan oleh subclass.
+
+`InformasiPerangkat.java`
+
+<img width="249" height="83" alt="image" src="https://github.com/user-attachments/assets/e874b2f6-3f81-4c5f-84af-9e440321c3c2" />
+
+`Perangkat.java`
+
+<img width="389" height="31" alt="image" src="https://github.com/user-attachments/assets/3d7e279a-8f6c-4a2f-aaa1-2821d58b64a7" />
+
 
 ------------------------------------------------------------------------
 
@@ -416,21 +697,90 @@ Interface `InformasiPerangkat` memiliki method `tampilkanInfo()` dan diimplement
 
 Encapsulation diterapkan dengan menggunakan access modifier `private` pada atribut. Data diakses atau diubah melalui method yang tersedia, seperti getter dan setter apabila diperlukan.
 
+Contohnya:
+
+``` java
+private final String idPerangkat;
+private String merk;
+private String tipe;
+private String kerusakan;
+```
+
+Dengan menggunakan `private`, atribut tidak dapat diakses secara
+langsung dari luar class.
+
+Untuk mengakses data tersebut, program menggunakan getter.
+
+Contohnya:
+
+``` java
+public String getMerk() {
+    return merk;
+}
+```
+
+Sedangkan untuk mengubah data yang memang dapat diubah, program
+menggunakan setter.
+
+Contohnya pada class `Servis`:
+
+``` java
+public void setStatus(String status) {
+    this.status = status;
+}
+```
+
+Setter tersebut digunakan ketika proses ubah data servis.
+
+
+------------------------------------------------------------------------
+## 10. Access Modifier
+
+Program menerapkan beberapa access modifier, yaitu `private` dan
+`public`.
+
+### `private`
+
+Digunakan pada atribut agar data tidak dapat diakses secara langsung
+dari luar class.
+
+Contohnya:
+
+``` java
+private String nama;
+private String noTelepon;
+private String alamat;
+```
+
+### `public`
+
+Digunakan pada class, constructor, getter, setter, dan method yang perlu
+digunakan oleh bagian program lainnya.
+
+Contohnya:
+
+``` java
+public void tambahServis()
+```
+
+Penggunaan access modifier mendukung penerapan encapsulation pada
+program.
+
 ------------------------------------------------------------------------
 
-## 10. Constructor dan Object
+## 11. Constructor dan Object
 
 Constructor memberikan nilai awal ketika object dibuat. Program menggunakan object `Pelanggan`, `Laptop` atau `Komputer`, serta `Servis`. Pada MP4, data yang diperlukan kemudian diproses melalui controller dan DAO untuk disimpan atau diambil dari database.
 
 ------------------------------------------------------------------------
 
-## 11. Database MySQL
+## 12. Database MySQL
 
 Program menggunakan database MySQL bernama **`db_servis_laptop`**. Database dikelola melalui Laragon dan digunakan untuk menyimpan data pelanggan, perangkat, dan servis.
 
 <img width="245" height="28" alt="Screenshot 2026-10-10 225403" src="https://github.com/user-attachments/assets/5619ca7a-9934-4cd7-aa21-dbae05135ca5" />
 
-### 11.1 Tabel `pelanggan`
+### 12.1 Tabel `pelanggan`
 
 | Kolom | Keterangan |
 |---|---|
@@ -439,7 +789,7 @@ Program menggunakan database MySQL bernama **`db_servis_laptop`**. Database dike
 | `no_telepon` | Nomor telepon pelanggan |
 | `alamat` | Alamat pelanggan |
 
-### 11.2 Tabel `perangkat`
+### 12.2 Tabel `perangkat`
 
 | Kolom | Keterangan |
 |---|---|
@@ -451,7 +801,7 @@ Program menggunakan database MySQL bernama **`db_servis_laptop`**. Database dike
 | `ukuran_layar` | Ukuran layar laptop |
 | `jenis_casing` | Jenis casing komputer |
 
-### 11.3 Tabel `servis`
+### 12.3 Tabel `servis`
 
 | Kolom | Keterangan |
 |---|---|
@@ -511,7 +861,7 @@ mysql> DESC servis;
 6 rows in set (0.00 sec)
 ```
 
-### 11.4 Relasi Antar Tabel
+### 12.4 Relasi Antar Tabel
 
 Tabel `servis` terhubung dengan tabel `pelanggan` melalui `id_pelanggan` dan tabel `perangkat` melalui `id_perangkat`.
 
@@ -601,13 +951,13 @@ public class ServisLaptop {
 
 ------------------------------------------------------------------------
 
-## 12. Implementasi JDBC dan DAO
+## 13. Implementasi JDBC dan DAO
 
-### 12.1 JDBC
+### 13.1 JDBC
 
 JDBC (*Java Database Connectivity*) digunakan untuk menghubungkan program Java dengan database MySQL serta menjalankan perintah SQL.
 
-### 12.2 Koneksi Database
+### 13.2 Koneksi Database
 
 Class `KoneksiDatabase` menggunakan `DriverManager.getConnection()` untuk membuka koneksi ke database `db_servis_laptop`. Class DAO menggunakan koneksi tersebut ketika menjalankan query.
 
@@ -634,7 +984,7 @@ public class KoneksiDatabase {
 }
 ```
 
-### 12.3 PreparedStatement
+### 13.3 PreparedStatement
 
 `PreparedStatement` digunakan untuk menjalankan perintah SQL dengan parameter. Parameter ditandai dengan tanda tanya (`?`) dan diisi menggunakan method seperti `setString()` atau `setInt()`.
 
@@ -646,7 +996,7 @@ try (Connection conn = KoneksiDatabase.getConnection();
              ResultSet rs = ps.executeQuery()) {
 ```
 
-### 12.4 Data Access Object (DAO)
+### 13.4 Data Access Object (DAO)
 
 DAO memisahkan proses akses database dari bagian program lainnya. `PelangganDAO` mengelola pelanggan, `PerangkatDAO` mengelola perangkat, dan `ServisDAO` mengelola servis.
 `PelangganDAO.java`
@@ -1114,21 +1464,78 @@ public class ServisDAO {
 ```
 
 
-### 12.5 ResultSet
+### 13.5 ResultSet
 
 `ResultSet` digunakan untuk membaca hasil query dari database, misalnya saat program menampilkan data servis.
 
-### 12.6 Try-with-resources
+### 13.6 Try-with-resources
 
 Program menggunakan try-with-resources untuk membantu menutup `Connection`, `PreparedStatement`, dan `ResultSet` setelah selesai digunakan.
 
-### 12.7 Transaksi Database
+### 13.7 Transaksi Database
 
 Pada proses penambahan data servis, `ServisDAO` menggunakan transaksi database. Jika proses berhasil, perubahan disimpan menggunakan `commit()`. Jika terjadi kesalahan, perubahan dibatalkan menggunakan `rollback()`.
 
 ------------------------------------------------------------------------
 
-## 13. Proses Tambah Data Servis
+## 14. Proses Tambah Data Servis
+
+Proses tambah data dijalankan ketika pengguna memilih menu **1. Tambah
+Data Servis**.
+
+### Data Pelanggan
+
+Pengguna memasukkan:
+
+-   ID Pelanggan
+-   Nama
+-   Nomor Telepon
+-   Alamat
+
+### Data Perangkat
+
+Pengguna terlebih dahulu memilih jenis perangkat:
+
+``` text
+1. Laptop
+2. Komputer
+```
+
+Kemudian memasukkan:
+
+-   ID Perangkat
+-   Merk
+-   Tipe
+-   Kerusakan
+
+Jika memilih **Laptop**, pengguna juga memasukkan:
+
+-   Ukuran Layar (Inci)
+
+Jika memilih **Komputer**, pengguna juga memasukkan:
+
+-   Jenis Casing
+
+### Data Servis
+
+Selanjutnya pengguna memasukkan:
+
+-   ID Servis
+-   Tanggal
+-   Status
+-   Biaya
+
+Status servis terdiri dari:
+
+``` text
+1. Menunggu
+2. Diproses
+3. Selesai
+```
+
+Setelah semua data dinyatakan valid, program membuat object `Pelanggan`,
+`Perangkat`, dan `Servis`.
+
 
 Pengguna memilih menu **1. Tambah Data Servis**, lalu memasukkan data pelanggan, memilih jenis perangkat, memasukkan data perangkat, dan mengisi informasi servis.
 
@@ -1146,11 +1553,40 @@ Setelah input divalidasi, controller memanggil DAO untuk menyimpan data ke datab
 
 ------------------------------------------------------------------------
 
-## 14. Proses Menampilkan Data
+## 15. Proses Menampilkan Data
 
 Menu **2. Tampilkan Data Servis** digunakan untuk menampilkan data yang tersimpan di database. Program mengambil data melalui `ServisDAO`, membaca hasil query menggunakan `ResultSet`, lalu menampilkan informasi melalui terminal.
 
 Informasi yang ditampilkan meliputi data pelanggan, perangkat, dan servis.
+
+Program melakukan perulangan terhadap `daftarServis`.
+
+``` java
+for (Servis servis : daftarServis) {
+
+    servis.tampilkanInfo();
+
+}
+```
+
+Informasi yang ditampilkan meliputi:
+
+-   ID Pelanggan
+-   Nama
+-   Nomor Telepon
+-   Alamat
+-   Jenis Perangkat
+-   ID Perangkat
+-   Merk
+-   Tipe
+-   Kerusakan
+-   ID Servis
+-   Tanggal
+-   Status
+-   Biaya
+
+Karena terdapat dummy data, data servis sudah langsung tampil ketika
+fitur read dijalankan.
 
 ```text
 Pilih menu: 2
@@ -1225,11 +1661,47 @@ Biaya        : Rp50000
 
 ------------------------------------------------------------------------
 
-## 15. Proses Mengubah Data
+## 16. Proses Mengubah Data
 
 Menu **3. Ubah Data Servis** digunakan untuk mengubah tanggal, status, dan biaya servis berdasarkan ID servis. Setelah input divalidasi, `ServisDAO` menjalankan perintah SQL untuk memperbarui data pada database.
 
 Jika ID tidak ditemukan, program menampilkan pesan bahwa data tidak tersedia.
+
+Pengguna memasukkan ID servis terlebih dahulu.
+
+``` text
+Masukkan ID Servis: S005
+```
+
+Jika data ditemukan, program akan menampilkan data tersebut.
+
+Data yang dapat diubah adalah:
+
+-   Tanggal
+-   Status
+-   Biaya
+
+Status dapat dipilih kembali melalui pilihan:
+
+``` text
+1. Menunggu
+2. Diproses
+3. Selesai
+```
+
+Setter digunakan untuk menyimpan perubahan.
+
+``` java
+servis.setTanggal(tanggalBaru);
+servis.setStatus(statusBaru);
+servis.setBiaya(biayaBaru);
+```
+
+Jika ID servis tidak ditemukan, program akan menampilkan:
+
+``` text
+Data servis tidak ditemukan.
+```
 
 ```text
 Pilih menu: 3
@@ -1274,9 +1746,29 @@ Data servis berhasil diubah.
 
 ------------------------------------------------------------------------
 
-## 16. Proses Menghapus Data
+## 17. Proses Menghapus Data
 
 Menu **4. Hapus Data Servis** digunakan untuk menghapus data servis berdasarkan ID servis. Sebelum penghapusan, program meminta konfirmasi:
+
+Program terlebih dahulu mencari data berdasarkan ID.
+
+Jika data ditemukan, data tersebut ditampilkan dan pengguna diminta
+melakukan konfirmasi.
+
+``` text
+Yakin ingin menghapus? (y/n):
+```
+
+Jika pengguna memilih `y`, data akan dihapus:
+
+``` java
+daftarServis.remove(servis);
+```
+
+Jika pengguna memilih `n`, penghapusan dibatalkan.
+
+Program juga melakukan validasi agar pengguna hanya memasukkan `y` atau
+`n`.
 
 ```text
 Yakin ingin menghapus? (y/n):
@@ -1324,9 +1816,20 @@ Data servis berhasil dihapus.
 
 ------------------------------------------------------------------------
 
-## 17. Proses Pencarian Data
+## 18. Proses Pencarian Data
 
 Menu **5. Cari Data Servis** digunakan untuk mencari data berdasarkan ID servis. DAO menjalankan query pencarian pada database. Jika data ditemukan, informasi servis ditampilkan.
+
+Mengguna memasukkan ID servis:
+
+``` text
+Masukkan ID Servis: S005
+```
+
+Program kemudian melakukan pencarian pada `daftarServis`.
+
+Jika data ditemukan, informasi servis akan ditampilkan.
+
 
 ```text
 Pilih menu: 5
@@ -1366,7 +1869,7 @@ Data servis tidak ditemukan.
 
 ------------------------------------------------------------------------
 
-## 18. Validasi Input
+## 19. Validasi Input
 
 Program menerapkan validasi untuk mengurangi kesalahan input.
 
@@ -1384,6 +1887,9 @@ Tanggal tidak boleh kosong!
 ```
 
 <img width="184" height="26" alt="kosong" src="https://github.com/user-attachments/assets/b8ad9abf-1157-409d-a7b5-f3d6de88445d" />
+
+Fitur ini membantu pengguna menemukan data tertentu tanpa harus melihat
+seluruh data servis.
 
 ### Validasi Nomor Telepon
 
@@ -1506,63 +2012,123 @@ ID Servis sudah digunakan!
 
 ------------------------------------------------------------------------
 
-## 19. Perulangan Program
+## 20. Perulangan Program
 
 Program menggunakan perulangan pada menu utama agar pengguna dapat menjalankan beberapa fitur tanpa menjalankan ulang program setiap kali selesai melakukan satu proses. Menu terus ditampilkan sampai pengguna memilih **6. Keluar**.
 
 Perulangan juga digunakan dalam proses validasi agar pengguna dapat memasukkan kembali data jika input tidak sesuai.
 
+Program menggunakan beberapa jenis perulangan.
+
+### `while`
+
+Digunakan pada menu utama agar program terus berjalan sampai pengguna
+memilih menu 6.
+
+``` java
+while (true) {
+    // menampilkan menu
+    // menerima pilihan
+    // memproses pilihan menu
+}
+```
+
+### `for`
+
+Digunakan untuk membaca data yang terdapat dalam `ArrayList`.
+
+``` java
+for (Servis servis : daftarServis) {
+    servis.tampilkanInfo();
+}
+```
+
+### `while`
+
+Digunakan pada proses validasi input.
+
+``` java
+while (true) {
+    // meminta input
+    // memeriksa input
+}
+```
+
+Jika input salah, program akan meminta pengguna memasukkan data kembali.
+
+
 ------------------------------------------------------------------------
 
-## 20. Percabangan `if-else` dan `switch-case`
+## 21. Percabangan `if-else` dan `switch-case`
 
 Program menggunakan `switch-case` untuk memproses pilihan menu. Setiap pilihan menjalankan fitur yang sesuai.
 
 `if-else` digunakan untuk menentukan kondisi tertentu, misalnya saat pengguna memilih jenis perangkat laptop atau komputer dan saat program memeriksa hasil pencarian data.
 
+Selain `switch-case`, program juga menggunakan `if-else` untuk
+menentukan kondisi tertentu.
+
+Contohnya pada pemilihan jenis perangkat:
+
+``` java
+if (pilihanJenis == 1) {
+
+    perangkat = new Laptop(
+        idPerangkat,
+        merk,
+        tipe,
+        kerusakan,
+        ukuranLayar
+    );
+
+} else {
+
+    perangkat = new Komputer(
+        idPerangkat,
+        merk,
+        tipe,
+        kerusakan,
+        jenisCasing
+    );
+}
+```
+
+`if-else` juga digunakan pada proses validasi, pencarian data, dan
+pengecekan kondisi lainnya.
+
+
 ------------------------------------------------------------------------
 
-## 21. Dokumentasi Output Program
-
-### 21.1 Koneksi Database
+## 22. Koneksi Database
 
 Pengujian dilakukan untuk memastikan program dapat terhubung ke database MySQL.
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot program yang berhasil mengakses database]
+```java
+package database;
 
-### 21.2 Tambah Data Servis
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-Data pelanggan, perangkat, dan servis dimasukkan melalui menu tambah data lalu disimpan ke database.
+public class KoneksiDatabase {
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot proses tambah data dan pesan keberhasilan]
+    private static final String URL =
+            "jdbc:mysql://localhost:3306/db_servis_laptop";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
 
-### 21.3 Tampilkan Data Servis
-
-Program mengambil data dari database dan menampilkan hasilnya melalui terminal.
-
-[TAMBAHKAN GAMBAR DI SINI: Screenshot hasil tampil data servis]
-
-### 21.4 Ubah Data Servis
-
-Pengguna mengubah tanggal, status, atau biaya servis berdasarkan ID servis.
-
-[TAMBAHKAN GAMBAR DI SINI: Screenshot hasil perubahan data servis]
-
-### 21.5 Cari Data Servis
-
-Program mencari data berdasarkan ID servis dan menampilkan informasi jika ditemukan.
-
-[TAMBAHKAN GAMBAR DI SINI: Screenshot hasil pencarian data servis]
-
-### 21.6 Hapus Data Servis
-
-Program meminta konfirmasi sebelum menghapus data servis dari database.
-
-[TAMBAHKAN GAMBAR DI SINI: Screenshot konfirmasi dan hasil penghapusan data servis]
+    public static Connection getConnection()
+            throws SQLException {
+        return DriverManager.getConnection(
+                URL, USER, PASSWORD
+        );
+    }
+}
+```
 
 ------------------------------------------------------------------------
 
-## 22. Penerapan Konsep PBO
+## 23. Penerapan Konsep PBO
 
 ### 1. Class
 
@@ -1606,7 +2172,7 @@ Validasi digunakan untuk memeriksa input sebelum data diproses atau disimpan.
 
 ------------------------------------------------------------------------
 
-## 23. Alur Program
+## 24. Alur Program
 
 ```text
                     MULAI
@@ -1649,7 +2215,7 @@ Program akan terus menampilkan menu sampai pengguna memilih **6. Keluar**.
 
 ------------------------------------------------------------------------
 
-## 24. Teknologi yang Digunakan
+## 25. Teknologi yang Digunakan
 
 - **Bahasa Pemrograman:** Java
 - **IDE:** NetBeans
@@ -1663,7 +2229,7 @@ Program akan terus menampilkan menu sampai pengguna memilih **6. Keluar**.
 
 ------------------------------------------------------------------------
 
-## 25. Cara Menjalankan Program
+## 26. Cara Menjalankan Program
 
 1. Pastikan Java dan NetBeans sudah terpasang.
 2. Jalankan Laragon dan pastikan layanan MySQL aktif.
@@ -1679,12 +2245,22 @@ Nama database, port, username, dan password pada konfigurasi koneksi harus sesua
 
 ------------------------------------------------------------------------
 
-## 26. Kesimpulan
+## 27. Kesimpulan
 
 **Sistem Pengelolaan Servis Laptop** dapat digunakan untuk membantu proses pencatatan dan pengelolaan data pelanggan, perangkat, serta servis melalui terminal.
 
-Program menyediakan fitur tambah, tampil, ubah, hapus, dan cari data servis. Pada Mini Project 4, data disimpan ke database MySQL sehingga dapat diakses kembali ketika program dijalankan.
+Program menyediakan fitur tambah, tampil, ubah, hapus, dan cari data servis. Pada pengembangan terbaru, penyimpanan data beralih menggunakan **database MySQL** melalui **JDBC (Java Database Connectivity)** dan pola **DAO (Data Access Object)**, sehingga data dapat tersimpan secara permanen dan diakses kembali ketika program dijalankan ulang.
 
-Program tetap menerapkan konsep PBO seperti class, object, constructor, encapsulation, inheritance, polymorphism, abstraction, dan interface. Struktur MVC memisahkan bagian model, controller, dan view, sedangkan JDBC dan DAO digunakan untuk mengelola akses database.
+Dalam pengembangannya, program tetap menerapkan konsep Pemrograman Berorientasi Objek seperti *class, object, constructor, encapsulation, access modifier, getter*, dan *setter*.
 
-Dengan pengembangan tersebut, program menjadi lebih terorganisir dan dapat mengelola data servis menggunakan database MySQL.
+Program juga menerapkan **inheritance** dengan `Perangkat` sebagai *superclass* dan `Laptop` serta `Komputer` sebagai *subclass*.
+
+Selain itu, program menerapkan **polymorphism melalui method overriding dan overloading**. Overriding diterapkan pada `Laptop` dan `Komputer` melalui method `tampilkanInfo()`, sedangkan overloading diterapkan pada class terkait dengan parameter yang berbeda.
+
+Program juga menerapkan **abstraction** melalui abstract class `Perangkat` dan abstract method `tampilkanInfo()`, serta mengimplementasikan interface `InformasiPerangkat`.
+
+Program menggunakan struktur **MVC (Model-View-Controller)** yang memisahkan bagian model, controller, dan view agar arsitektur kode lebih bersih dan terorganisir.
+
+Untuk mengurangi kesalahan input, program dilengkapi dengan berbagai validasi seperti validasi input kosong, nomor telepon, jenis perangkat, status, tanggal, biaya, dan ID servis.
+
+Dengan penerapan konsep PBO, struktur MVC, serta integrasi database MySQL menggunakan DAO dan JDBC, program menjadi lebih terorganisir, profesional, dan handal dalam mengelola data servis secara *real-time*.
