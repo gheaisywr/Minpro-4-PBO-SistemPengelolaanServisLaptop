@@ -183,10 +183,48 @@ Hubungan inheritance:
 
 Class `Perangkat` merupakan **abstract class** yang menjadi dasar bagi `Laptop` dan `Komputer`. Class ini menyimpan data umum seperti ID perangkat, merek, tipe, dan kerusakan, serta mengimplementasikan interface `InformasiPerangkat`.
 
-<img width="521" height="211" alt="image" src="https://github.com/user-attachments/assets/aa6d3416-7f1a-4660-b619-e03e73e526bc" />
-<img width="508" height="371" alt="image" src="https://github.com/user-attachments/assets/0b8501c7-6413-4482-9f9e-336a096666f9" />
-<img width="258" height="59" alt="image" src="https://github.com/user-attachments/assets/ad90b0c3-1f20-4178-ae2e-9fbc65d24d25" />
+```java
+package model;
 
+import interfaces.InformasiPerangkat;
+public abstract class Perangkat implements InformasiPerangkat {
+
+    private final String idPerangkat;
+    private String merk;
+    private String tipe;
+    private String kerusakan;
+
+    public Perangkat(String idPerangkat, String merk, String tipe, String kerusakan) {
+        this.idPerangkat = idPerangkat;
+        this.merk = merk;
+        this.tipe = tipe;
+        this.kerusakan = kerusakan;
+    }
+    public String getIdPerangkat() {
+        return idPerangkat;
+    }
+    public String getMerk() {
+        return merk;
+    }
+    public void setMerk(String merk) {
+        this.merk = merk;
+    }
+    public String getTipe() {
+        return tipe;
+    }
+    public void setTipe(String tipe) {
+        this.tipe = tipe;
+    }
+    public String getKerusakan() {
+        return kerusakan;
+    }
+    public void setKerusakan(String kerusakan) {
+        this.kerusakan = kerusakan;
+    }
+    @Override
+    public abstract void tampilkanInfo();
+}
+```
 
 ### 4.2 `Laptop`
 
@@ -205,18 +243,132 @@ Class `Komputer` merupakan subclass dari `Perangkat` dan memiliki atribut khusus
 
 Class `Pelanggan` menyimpan `idPelanggan`, `nama`, `noTelepon`, dan `alamat`. Pada MP4, data pelanggan disimpan ke tabel `pelanggan` melalui `PelangganDAO`.
 
-<img width="534" height="203" alt="image" src="https://github.com/user-attachments/assets/e4ed165b-01d4-4a52-ae31-61ed4d8027c4" />
-<img width="530" height="380" alt="image" src="https://github.com/user-attachments/assets/b9930a10-8005-4a44-9a5d-8f74ce8fe6e6" />
+```java
+package model;
+
+public class Pelanggan {
+
+    private final String idPelanggan;
+    private String nama;
+    private String noTelepon;
+    private String alamat;
+
+    public Pelanggan(String idPelanggan, String nama, String noTelepon, String alamat) {
+        this.idPelanggan = idPelanggan;
+        this.nama = nama;
+        this.noTelepon = noTelepon;
+        this.alamat = alamat;
+    }
+    public String getIdPelanggan() {
+        return idPelanggan;
+    }
+    public String getNama() {
+        return nama;
+    }
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+    public String getNoTelepon() {
+        return noTelepon;
+    }
+    public void setNoTelepon(String noTelepon) {
+        this.noTelepon = noTelepon;
+    }
+    public String getAlamat() {
+        return alamat;
+    }
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
+}
+```
 
 ### 4.5 `Servis`
 
 Class `Servis` menyimpan `idServis`, `tanggal`, `status`, `biaya`, `pelanggan`, dan `perangkat`. Data servis disimpan ke tabel `servis` dan dihubungkan dengan data pelanggan serta perangkat.
 
-<img width="337" height="284" alt="image" src="https://github.com/user-attachments/assets/75438dc0-21e0-4a65-9996-6d7ca40b4d20" />
-<img width="254" height="369" alt="image" src="https://github.com/user-attachments/assets/aa1d88f4-2d91-415d-a2c1-0aa6da66bc0a" />
-<img width="186" height="59" alt="image" src="https://github.com/user-attachments/assets/4c864e62-f97f-4f21-9dd8-b541d66ede69" />
-<img width="389" height="368" alt="image" src="https://github.com/user-attachments/assets/5cf6026e-429d-4d75-a190-5454c91ab035" />
+```java
+package model;
 
+public class Servis {
+    private final String idServis;
+    private String tanggal;
+    private String status;
+    private int biaya;
+    private Pelanggan pelanggan;
+    private Perangkat perangkat;
+    
+    public Servis(String idServis, String tanggal,
+            String status, int biaya,
+            Pelanggan pelanggan, Perangkat perangkat) {
+
+        this.idServis = idServis;
+        this.tanggal = tanggal;
+        this.status = status;
+        this.biaya = biaya;
+        this.pelanggan = pelanggan;
+        this.perangkat = perangkat;
+    }
+    public String getIdServis() {
+        return idServis;
+    }
+    public String getTanggal() {
+        return tanggal;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public int getBiaya() {
+        return biaya;
+    }
+    public Pelanggan getPelanggan() {
+        return pelanggan;
+    }
+    public Perangkat getPerangkat() {
+        return perangkat;
+    }
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public void setBiaya(int biaya) {
+        this.biaya = biaya;
+    }
+    
+    //OVERLOADING 1
+    public void tampilkanInfo(){
+        tampilkanInfo(true);
+    }
+    //OVERLOADING 2
+    public void tampilkanInfo(boolean tampilkanPelanggan) {
+        System.out.println("================================");
+        System.out.println("           DATA SERVIS");
+        System.out.println("================================");
+
+        if (tampilkanPelanggan) {
+            System.out.println();
+            System.out.println("ID Pelanggan : "
+                    + pelanggan.getIdPelanggan());
+            System.out.println("Nama         : "
+                    + pelanggan.getNama());
+            System.out.println("No Telepon   : "
+                    + pelanggan.getNoTelepon());
+            System.out.println("Alamat       : "
+                    + pelanggan.getAlamat());
+        }
+        System.out.println();
+        perangkat.tampilkanInfo();
+        System.out.println();
+        System.out.println("ID Servis    : " + idServis);
+        System.out.println("Tanggal      : " + tanggal);
+        System.out.println("Status       : " + status);
+        System.out.println("Biaya        : Rp" + biaya);
+        System.out.println("================================");
+    }
+}
+```
 
 ------------------------------------------------------------------------
 
@@ -312,12 +464,6 @@ Status servis yang digunakan adalah `Menunggu`, `Diproses`, dan `Selesai`.
 
 <img width="245" height="28" alt="Screenshot 2026-10-10 225403" src="https://github.com/user-attachments/assets/5619ca7a-9934-4cd7-aa21-dbae05135ca5" />
 
-<img width="173" height="26" alt="Screenshot 2026-10-10 225412" src="https://github.com/user-attachments/assets/3dff77ee-4639-49b4-b5f6-9970b9c5351d" />
-
-<img width="269" height="86" alt="Screenshot 2026-10-10 225420" src="https://github.com/user-attachments/assets/739e5f84-5faa-44af-8742-2c6e121af786" />
-
-<img width="275" height="124" alt="Screenshot 2026-10-10 225428" src="https://github.com/user-attachments/assets/655cd7ad-8fb3-4d19-b87a-e26fd8b96b59" />
-
 <img width="421" height="161" alt="Screenshot 2026-10-10 225437" src="https://github.com/user-attachments/assets/44c7861b-8662-4662-87d7-a1a2fea1cda4" />
 
 <img width="463" height="63" alt="Screenshot 2026-10-10 225902" src="https://github.com/user-attachments/assets/0cac2d26-dd3f-4f3b-9c59-b067d7525193" />
@@ -326,12 +472,6 @@ Status servis yang digunakan adalah `Menunggu`, `Diproses`, dan `Selesai`.
 
 <img width="590" height="63" alt="Screenshot 2026-10-10 231052" src="https://github.com/user-attachments/assets/f53489aa-1c4d-4ede-94a5-4f0d6f390e52" />
 
-
-
-
-
-
-[TAMBAHKAN GAMBAR DI SINI: Screenshot database db_servis_laptop dengan tabel pelanggan, perangkat, dan servis]
 
 ### 11.4 Relasi Antar Tabel
 
@@ -349,7 +489,12 @@ pelanggan
  perangkat
 ```
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot struktur tabel atau foreign key database]
+<img width="173" height="26" alt="Screenshot 2026-10-10 225412" src="https://github.com/user-attachments/assets/3dff77ee-4639-49b4-b5f6-9970b9c5351d" />
+
+<img width="269" height="86" alt="Screenshot 2026-10-10 225420" src="https://github.com/user-attachments/assets/739e5f84-5faa-44af-8742-2c6e121af786" />
+
+<img width="275" height="124" alt="Screenshot 2026-10-10 225428" src="https://github.com/user-attachments/assets/655cd7ad-8fb3-4d19-b87a-e26fd8b96b59" />
+
 
 ### 11.5 Dummy Data
 
