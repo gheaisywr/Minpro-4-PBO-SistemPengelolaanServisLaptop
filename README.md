@@ -428,6 +428,8 @@ Constructor memberikan nilai awal ketika object dibuat. Program menggunakan obje
 
 Program menggunakan database MySQL bernama **`db_servis_laptop`**. Database dikelola melalui Laragon dan digunakan untuk menyimpan data pelanggan, perangkat, dan servis.
 
+<img width="245" height="28" alt="Screenshot 2026-10-10 225403" src="https://github.com/user-attachments/assets/5619ca7a-9934-4cd7-aa21-dbae05135ca5" />
+
 ### 11.1 Tabel `pelanggan`
 
 | Kolom | Keterangan |
@@ -462,16 +464,52 @@ Program menggunakan database MySQL bernama **`db_servis_laptop`**. Database dike
 
 Status servis yang digunakan adalah `Menunggu`, `Diproses`, dan `Selesai`.
 
-<img width="245" height="28" alt="Screenshot 2026-10-10 225403" src="https://github.com/user-attachments/assets/5619ca7a-9934-4cd7-aa21-dbae05135ca5" />
 
 <img width="421" height="161" alt="Screenshot 2026-10-10 225437" src="https://github.com/user-attachments/assets/44c7861b-8662-4662-87d7-a1a2fea1cda4" />
 
-<img width="463" height="63" alt="Screenshot 2026-10-10 225902" src="https://github.com/user-attachments/assets/0cac2d26-dd3f-4f3b-9c59-b067d7525193" />
+<img width="269" height="86" alt="Screenshot 2026-10-10 225420" src="https://github.com/user-attachments/assets/739e5f84-5faa-44af-8742-2c6e121af786" />
 
-<img width="724" height="59" alt="Screenshot 2026-10-10 230540" src="https://github.com/user-attachments/assets/dec295f0-bb6f-4610-8bc5-fb850acbd42e" />
+<img width="275" height="124" alt="Screenshot 2026-10-10 225428" src="https://github.com/user-attachments/assets/655cd7ad-8fb3-4d19-b87a-e26fd8b96b59" />
 
-<img width="590" height="63" alt="Screenshot 2026-10-10 231052" src="https://github.com/user-attachments/assets/f53489aa-1c4d-4ede-94a5-4f0d6f390e52" />
+```text
+mysql> DESC pelanggan;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| id_pelanggan | varchar(10)  | NO   | PRI | NULL    |       |
+| nama         | varchar(100) | NO   |     | NULL    |       |
+| no_telepon   | varchar(15)  | NO   |     | NULL    |       |
+| alamat       | varchar(200) | NO   |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
 
+mysql> DESC perangkat;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| id_perangkat    | varchar(10)  | NO   | PRI | NULL    |       |
+| jenis_perangkat | varchar(20)  | NO   |     | NULL    |       |
+| merk            | varchar(50)  | NO   |     | NULL    |       |
+| tipe            | varchar(100) | NO   |     | NULL    |       |
+| kerusakan       | varchar(200) | NO   |     | NULL    |       |
+| ukuran_layar    | varchar(30)  | YES  |     | NULL    |       |
+| jenis_casing    | varchar(30)  | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> DESC servis;
++--------------+---------------------------------------+------+-----+---------+-------+
+| Field        | Type                                  | Null | Key | Default | Extra |
++--------------+---------------------------------------+------+-----+---------+-------+
+| id_servis    | varchar(10)                           | NO   | PRI | NULL    |       |
+| tanggal      | date                                  | NO   |     | NULL    |       |
+| status       | enum('menunggu','diproses','selesai') | NO   |     | NULL    |       |
+| biaya        | int                                   | NO   |     | NULL    |       |
+| id_pelanggan | varchar(10)                           | NO   | MUL | NULL    |       |
+| id_perangkat | varchar(10)                           | NO   | MUL | NULL    |       |
++--------------+---------------------------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+```
 
 ### 11.4 Relasi Antar Tabel
 
@@ -489,18 +527,70 @@ pelanggan
  perangkat
 ```
 
-<img width="173" height="26" alt="Screenshot 2026-10-10 225412" src="https://github.com/user-attachments/assets/3dff77ee-4639-49b4-b5f6-9970b9c5351d" />
-
-<img width="269" height="86" alt="Screenshot 2026-10-10 225420" src="https://github.com/user-attachments/assets/739e5f84-5faa-44af-8742-2c6e121af786" />
-
-<img width="275" height="124" alt="Screenshot 2026-10-10 225428" src="https://github.com/user-attachments/assets/655cd7ad-8fb3-4d19-b87a-e26fd8b96b59" />
-
-
 ### 11.5 Dummy Data
 
 Dummy data dimasukkan melalui file SQL, bukan ditulis langsung di kode Java. Data awal mencakup pelanggan, perangkat, dan servis yang saling berhubungan untuk membantu pengujian program.
 
-<img width="365" height="291" alt="Screenshot 2026-10-10 233336" src="https://github.com/user-attachments/assets/2411835a-1b2a-4f16-969b-bd6f848e3501" />
+<img width="463" height="63" alt="Screenshot 2026-10-10 225902" src="https://github.com/user-attachments/assets/35381e68-1910-45a2-b17d-3e78e49d3775" />
+
+<img width="724" height="59" alt="Screenshot 2026-10-10 230540" src="https://github.com/user-attachments/assets/e6218248-b0dd-48da-9233-cee2ca49bdcb" />
+
+<img width="590" height="63" alt="Screenshot 2026-10-10 231052" src="https://github.com/user-attachments/assets/9962c790-e373-4609-8737-56ba4d4f46c4" />
+
+```text
+mysql> SELECT * FROM pelanggan;
++--------------+--------------+--------------+-------------+
+| id_pelanggan | nama         | no_telepon   | alamat      |
++--------------+--------------+--------------+-------------+
+| P001         | James Chao   | 081234567890 | Samarinda   |
+| P002         | Andi Pratama | 082345678901 | Balikpapan  |
+| P003         | Ghea         | 0895704176685| Jl. Pramuka |
++--------------+--------------+--------------+-------------+
+3 rows in set (0.02 sec)
+
+mysql> SELECT * FROM perangkat;
++--------------+-----------------+--------+-------------+------------------------------------------+--------------+--------------+
+| id_perangkat | jenis_perangkat | merk   | tipe        | kerusakan                                | ukuran_layar | jenis_casing |
++--------------+-----------------+--------+-------------+------------------------------------------+--------------+--------------+
+| K001         | Komputer        | Lenovo | ThinkCentre | Komputer tidak dapat menyala             | NULL         | Tower        |
+| L001         | Laptop          | ASUS   | VivoBook 14 | Keyboard beberapa tombol tidak berfungsi | 14 inci      | NULL         |
+| L002         | Laptop          | LENOVO | ThinkPad    | Overheating                              | 14 inci      | NULL         |
++--------------+-----------------+--------+-------------+------------------------------------------+--------------+--------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM servis;
++-----------+------------+----------+--------+--------------+--------------+
+| id_servis | tanggal    | status   | biaya  | id_pelanggan | id_perangkat |
++-----------+------------+----------+--------+--------------+--------------+
+| S001      | 2026-09-09 | diproses | 250000 | P001         | L001         |
+| S002      | 2026-09-10 | menunggu | 150000 | P002         | K001         |
+| S003      | 2026-08-16 | diproses | 58000  | P003         | L002         |
++-----------+------------+----------+--------+--------------+--------------+
+3 rows in set (0.01 sec)
+```
+
+```java
+package com.mycompany.servislaptop;
+
+import controller.ServisController;
+import java.util.Scanner;
+import view.MenuView;
+import dao.PelangganDAO;
+
+public class ServisLaptop {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        ServisController controller = new ServisController();
+        MenuView menu = new MenuView(input, controller);
+
+        menu.tampilkanMenu();
+        input.close();
+
+        PelangganDAO pelangganDAO = new PelangganDAO();
+        pelangganDAO.tampilkanSemuaPelanggan();
+    }
+}
+```
 
 <img width="406" height="176" alt="Screenshot 2026-10-10 233503" src="https://github.com/user-attachments/assets/25ce7f79-9adf-47d0-9475-228fce8c852d" />
 
@@ -559,6 +649,470 @@ try (Connection conn = KoneksiDatabase.getConnection();
 ### 12.4 Data Access Object (DAO)
 
 DAO memisahkan proses akses database dari bagian program lainnya. `PelangganDAO` mengelola pelanggan, `PerangkatDAO` mengelola perangkat, dan `ServisDAO` mengelola servis.
+`PelangganDAO.java`
+```java
+package dao;
+
+import database.KoneksiDatabase;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import model.Pelanggan;
+
+public class PelangganDAO {
+
+    // READ
+    public void tampilkanSemuaPelanggan() {
+        String sql = "SELECT * FROM pelanggan";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                System.out.println("ID Pelanggan: "
+                        + rs.getString("id_pelanggan"));
+                System.out.println("Nama: "
+                        + rs.getString("nama"));
+                System.out.println("No. Telepon: "
+                        + rs.getString("no_telepon"));
+                System.out.println("Alamat: "
+                        + rs.getString("alamat"));
+                System.out.println("----------------------");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Gagal menampilkan pelanggan: "
+                    + e.getMessage());
+        }
+    }
+
+    // CREATE
+    public boolean tambahPelanggan(
+            String id, String nama,
+            String noTelepon, String alamat) {
+
+        String sql = "INSERT INTO pelanggan "
+                + "(id_pelanggan, nama, no_telepon, alamat) "
+                + "VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            ps.setString(2, nama);
+            ps.setString(3, noTelepon);
+            ps.setString(4, alamat);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Gagal menambahkan pelanggan: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // SEARCH
+    public Pelanggan cariPelanggan(String id) {
+        String sql = "SELECT * FROM pelanggan " + "WHERE id_pelanggan = ?";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Pelanggan(
+                            rs.getString("id_pelanggan"),
+                            rs.getString("nama"),
+                            rs.getString("no_telepon"),
+                            rs.getString("alamat")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal mencari pelanggan: " + e.getMessage());
+        }
+        return null;
+    }
+}
+```
+
+`PerangkatDAO.java`
+```java
+package dao;
+
+import database.KoneksiDatabase;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import model.Komputer;
+import model.Laptop;
+import model.Perangkat;
+
+public class PerangkatDAO {
+
+    // READ
+    public void tampilkanSemuaPerangkat() {
+        String sql = "SELECT * FROM perangkat";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                System.out.println("ID Perangkat: "
+                        + rs.getString("id_perangkat"));
+                System.out.println("Jenis Perangkat: "
+                        + rs.getString("jenis_perangkat"));
+                System.out.println("Merk: "
+                        + rs.getString("merk"));
+                System.out.println("Tipe: "
+                        + rs.getString("tipe"));
+                System.out.println("Kerusakan: "
+                        + rs.getString("kerusakan"));
+
+                if ("Laptop".equalsIgnoreCase(
+                        rs.getString("jenis_perangkat"))) {
+                    System.out.println("Ukuran Layar: "
+                            + rs.getString("ukuran_layar"));
+                } else {
+                    System.out.println("Jenis Casing: "
+                            + rs.getString("jenis_casing"));
+                }
+                System.out.println("----------------------");
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal menampilkan perangkat: "
+                    + e.getMessage());
+        }
+    }
+
+    // CREATE
+    public boolean tambahPerangkat(
+            String id, String jenis, String merk,
+            String tipe, String kerusakan,
+            String ukuranLayar, String jenisCasing) {
+            String sql = "INSERT INTO perangkat "
+                + "(id_perangkat, jenis_perangkat, merk, tipe, "
+                + "kerusakan, ukuran_layar, jenis_casing) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, id);
+            ps.setString(2, jenis);
+            ps.setString(3, merk);
+            ps.setString(4, tipe);
+            ps.setString(5, kerusakan);
+
+            if (ukuranLayar == null
+                    || ukuranLayar.trim().isEmpty()) {
+                ps.setNull(6, Types.VARCHAR);
+            } else {
+                ps.setString(6, ukuranLayar);
+            }
+            if (jenisCasing == null
+                    || jenisCasing.trim().isEmpty()) {
+                ps.setNull(7, Types.VARCHAR);
+            } else {
+                ps.setString(7, jenisCasing);
+            }
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Gagal menambahkan perangkat: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // SEARCH
+    public Perangkat cariPerangkat(String id) {
+        String sql = "SELECT * FROM perangkat "
+                + "WHERE id_perangkat = ?";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String jenis = rs.getString("jenis_perangkat");
+                    String idPerangkat = rs.getString("id_perangkat");
+                    String merk = rs.getString("merk");
+                    String tipe = rs.getString("tipe");
+                    String kerusakan = rs.getString("kerusakan");
+
+                    if ("Laptop".equalsIgnoreCase(jenis)) {
+                        return new Laptop(idPerangkat, merk, tipe, kerusakan, rs.getString("ukuran_layar")
+                        );
+                    } else if ("Komputer".equalsIgnoreCase(jenis)) {
+                        return new Komputer(idPerangkat, merk, tipe, kerusakan, rs.getString("jenis_casing")
+                        );
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal mencari perangkat: "
+                    + e.getMessage());
+        }
+        return null;
+    }
+}
+```
+`ServisDAO.java`
+```java
+package dao;
+
+import database.KoneksiDatabase;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import model.Komputer;
+import model.Laptop;
+import model.Pelanggan;
+import model.Perangkat;
+import model.Servis;
+
+public class ServisDAO {
+
+    private PelangganDAO pelangganDAO = new PelangganDAO();
+    private PerangkatDAO perangkatDAO = new PerangkatDAO();
+
+    // READ
+    public ArrayList<Servis> tampilkanSemuaServis() {
+        ArrayList<Servis> daftarServis = new ArrayList<>();
+
+        String sql = "SELECT id_servis FROM servis";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Servis servis = cariServis(
+                        rs.getString("id_servis")
+                );
+                if (servis != null) {
+                    daftarServis.add(servis);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Gagal menampilkan servis: "
+                    + e.getMessage());
+        }
+        return daftarServis;
+    }
+
+    // SEARCH
+    public Servis cariServis(String id) {
+        String sql = "SELECT * FROM servis WHERE id_servis = ?";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String idPelanggan = rs.getString("id_pelanggan");
+                    String idPerangkat = rs.getString("id_perangkat");
+
+                    Pelanggan pelanggan = pelangganDAO.cariPelanggan(idPelanggan);
+                    Perangkat perangkat = perangkatDAO.cariPerangkat(idPerangkat);
+
+                    if (pelanggan != null && perangkat != null) {
+                        return new Servis(
+                                rs.getString("id_servis"),
+                                formatTanggal(rs.getString("tanggal")),
+                                kapitalAwal(rs.getString("status")),
+                                rs.getInt("biaya"), pelanggan, perangkat);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal mencari servis: "
+                    + e.getMessage());
+        }
+        return null;
+    }
+
+    // CREATE
+    public boolean tambahServis(Servis servis) {
+        String sqlPelanggan = "INSERT INTO pelanggan "
+                + "(id_pelanggan, nama, no_telepon, alamat) "
+                + "VALUES (?, ?, ?, ?)";
+        String sqlPerangkat = "INSERT INTO perangkat "
+                + "(id_perangkat, jenis_perangkat, merk, tipe, "
+                + "kerusakan, ukuran_layar, jenis_casing) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sqlServis = "INSERT INTO servis "
+                + "(id_servis, tanggal, status, biaya, "
+                + "id_pelanggan, id_perangkat) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = KoneksiDatabase.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try {
+                // Simpan pelanggan
+                try (PreparedStatement ps =
+                        conn.prepareStatement(sqlPelanggan)) {
+                    Pelanggan p = servis.getPelanggan();
+
+                    ps.setString(1, p.getIdPelanggan());
+                    ps.setString(2, p.getNama());
+                    ps.setString(3, p.getNoTelepon());
+                    ps.setString(4, p.getAlamat());
+                    ps.executeUpdate();
+                }
+
+                // Simpan perangkat
+                try (PreparedStatement ps =
+                        conn.prepareStatement(sqlPerangkat)) {
+                    Perangkat p = servis.getPerangkat();
+
+                    ps.setString(1, p.getIdPerangkat());
+
+                    if (p instanceof Laptop) {
+                        Laptop laptop = (Laptop) p;
+                        ps.setString(2, "Laptop");
+                        ps.setString(3, p.getMerk());
+                        ps.setString(4, p.getTipe());
+                        ps.setString(5, p.getKerusakan());
+                        ps.setString(6, laptop.getUkuranLayar());
+                        ps.setNull(7, Types.VARCHAR);
+                        
+                    } else if (p instanceof Komputer) {
+                        Komputer komputer = (Komputer) p;
+
+                        ps.setString(2, "Komputer");
+                        ps.setString(3, p.getMerk());
+                        ps.setString(4, p.getTipe());
+                        ps.setString(5, p.getKerusakan());
+                        ps.setNull(6, Types.VARCHAR);
+                        ps.setString(7, komputer.getJenisCasing());
+
+                    } else {
+                        conn.rollback();
+                        return false;
+                    }
+                    ps.executeUpdate();
+                }
+
+                // Simpan servis
+                try (PreparedStatement ps =
+                        conn.prepareStatement(sqlServis)) {
+
+                    ps.setString(1, servis.getIdServis());
+                    ps.setDate(2, java.sql.Date.valueOf(
+                            keFormatDatabase(servis.getTanggal())
+                    ));
+
+                    ps.setString(3, servis.getStatus());
+                    ps.setInt(4, servis.getBiaya());
+                    ps.setString(5, servis.getPelanggan().getIdPelanggan());
+                    ps.setString(6, servis.getPerangkat().getIdPerangkat());
+                    ps.executeUpdate();
+                }
+                conn.commit();
+                return true;
+            } catch (SQLException e) {
+                conn.rollback();
+                System.out.println("Gagal menambahkan servis: "
+                        + e.getMessage());
+                return false;
+                
+            } catch (RuntimeException e) {
+                conn.rollback();
+
+                System.out.println("Format tanggal tidak valid: "
+                        + e.getMessage());
+                return false;
+
+            } finally {
+                conn.setAutoCommit(true);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Gagal mengakses database: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // UPDATE
+    public boolean ubahServis(Servis servis) {
+        String sql = "UPDATE servis SET tanggal = ?, "
+                + "status = ?, biaya = ? WHERE id_servis = ?";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setDate(1, java.sql.Date.valueOf(
+                    keFormatDatabase(servis.getTanggal())
+            ));
+            ps.setString(2, servis.getStatus());
+            ps.setInt(3, servis.getBiaya());
+            ps.setString(4, servis.getIdServis());
+            return ps.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            System.out.println("Gagal mengubah servis: " + e.getMessage());
+            return false;
+
+        } catch (RuntimeException e) {
+            System.out.println("Format tanggal tidak valid: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // DELETE
+    public boolean hapusServis(String id) {
+        String sql = "DELETE FROM servis WHERE id_servis = ?";
+
+        try (Connection conn = KoneksiDatabase.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Gagal menghapus servis: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // FORMAT TANGGAL UNTUK DATABASE
+    private String keFormatDatabase(String tanggal) {
+        LocalDate date = LocalDate.parse(tanggal, DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        );
+        return date.toString();
+    }
+
+    // FORMAT TANGGAL UNTUK TAMPILAN
+    private String formatTanggal(String tanggal) {
+        if (tanggal == null || tanggal.isEmpty()) {
+            return tanggal;
+        }
+        LocalDate date = LocalDate.parse(tanggal);
+        return date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        );
+    }
+
+    // FORMAT STATUS
+    private String kapitalAwal(String teks) {
+        if (teks == null || teks.isEmpty()) {
+            return teks;
+        }
+        return teks.substring(0, 1).toUpperCase()
+                + teks.substring(1).toLowerCase();
+    }
+}
+```
+
 
 ### 12.5 ResultSet
 
@@ -588,7 +1142,7 @@ Status servis yang tersedia:
 
 Setelah input divalidasi, controller memanggil DAO untuk menyimpan data ke database. `ServisDAO` menangani penambahan data yang saling berhubungan menggunakan transaksi database.
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot proses tambah data servis yang berhasil]
+<img width="191" height="394" alt="image" src="https://github.com/user-attachments/assets/d711d56f-a4f0-4a17-bd79-cdca68fb4167" />
 
 ------------------------------------------------------------------------
 
@@ -598,7 +1152,76 @@ Menu **2. Tampilkan Data Servis** digunakan untuk menampilkan data yang tersimpa
 
 Informasi yang ditampilkan meliputi data pelanggan, perangkat, dan servis.
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot hasil tampil data servis]
+```text
+Pilih menu: 2
+
+=== DAFTAR DATA SERVIS ===
+================================
+           DATA SERVIS
+================================
+
+ID Pelanggan : P001
+Nama         : James Chao
+No Telepon   : 081234567890
+Alamat       : Samarinda
+
+Jenis        : Laptop
+ID Laptop    : L001
+Merk         : ASUS
+Tipe         : VivoBook 14
+Kerusakan    : Keyboard beberapa tombol tidak berfungsi
+Ukuran Layar (Inci) : 14 inci
+
+ID Servis    : S001
+Tanggal      : 09-09-2026
+Status       : Diproses
+Biaya        : Rp250000
+================================
+
+================================
+           DATA SERVIS
+================================
+
+ID Pelanggan : P002
+Nama         : Andi Pratama
+No Telepon   : 082345678901
+Alamat       : Balikpapan
+
+Jenis        : Komputer
+ID Komputer  : K001
+Merk         : Lenovo
+Tipe         : ThinkCentre
+Kerusakan    : Komputer tidak dapat menyala
+Jenis Casing : Tower
+
+ID Servis    : S002
+Tanggal      : 10-09-2026
+Status       : Menunggu
+Biaya        : Rp150000
+================================
+
+================================
+           DATA SERVIS
+================================
+
+ID Pelanggan : P003
+Nama         : Ghea
+No Telepon   : 0895704176685
+Alamat       : Jl. Pramuka
+
+Jenis        : Laptop
+ID Laptop    : L002
+Merk         : LENOVO
+Tipe         : ThinkPad
+Kerusakan    : Overheating
+Ukuran Layar (Inci) : 14 inci
+
+ID Servis    : S003
+Tanggal      : 15-08-2026
+Status       : Menunggu
+Biaya        : Rp50000
+================================
+```
 
 ------------------------------------------------------------------------
 
@@ -608,7 +1231,46 @@ Menu **3. Ubah Data Servis** digunakan untuk mengubah tanggal, status, dan biaya
 
 Jika ID tidak ditemukan, program menampilkan pesan bahwa data tidak tersedia.
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot proses ubah data dan hasil perubahan]
+```text
+Pilih menu: 3
+
+=== UBAH DATA SERVIS ===
+Masukkan ID Servis: S003
+
+Data ditemukan:
+================================
+           DATA SERVIS
+================================
+
+ID Pelanggan : P003
+Nama         : Ghea
+No Telepon   : 0895704176685
+Alamat       : Jl. Pramuka
+
+Jenis        : Laptop
+ID Laptop    : L002
+Merk         : LENOVO
+Tipe         : ThinkPad
+Kerusakan    : Overheating
+Ukuran Layar (Inci) : 14 inci
+
+ID Servis    : S003
+Tanggal      : 15-08-2026
+Status       : Menunggu
+Biaya        : Rp50000
+================================
+
+--- UBAH DATA SERVIS ---
+Tanggal baru (DD-MM-YYYY): 16-08-2026
+
+Pilih Status Proses:
+1. Menunggu
+2. Diproses
+3. Selesai
+Pilih status: 2
+Biaya baru: Rp58000
+Data servis berhasil diubah.
+```
 
 ------------------------------------------------------------------------
 
@@ -622,7 +1284,43 @@ Yakin ingin menghapus? (y/n):
 
 Jika pengguna memilih `y`, DAO menghapus data dari database. Jika memilih `n`, penghapusan dibatalkan.
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot konfirmasi dan hasil penghapusan data servis]
+```text
+Pilih menu: 4
+
+=== HAPUS DATA SERVIS ===
+Masukkan ID Servis: S003
+
+Data yang akan dihapus:
+================================
+           DATA SERVIS
+================================
+
+ID Pelanggan : P003
+Nama         : Ghea
+No Telepon   : 0895704176685
+Alamat       : Jl. Pramuka
+
+Jenis        : Laptop
+ID Laptop    : L002
+Merk         : LENOVO
+Tipe         : ThinkPad
+Kerusakan    : Overheating
+Ukuran Layar (Inci) : 14 inci
+
+ID Servis    : S003
+Tanggal      : 16-08-2026
+Status       : Diproses
+Biaya        : Rp58000
+================================
+
+Yakin ingin menghapus? (y/n): n
+Penghapusan dibatalkan.
+```
+
+```text
+Yakin ingin menghapus? (y/n): y
+Data servis berhasil dihapus.
+```
 
 ------------------------------------------------------------------------
 
@@ -630,13 +1328,41 @@ Jika pengguna memilih `y`, DAO menghapus data dari database. Jika memilih `n`, p
 
 Menu **5. Cari Data Servis** digunakan untuk mencari data berdasarkan ID servis. DAO menjalankan query pencarian pada database. Jika data ditemukan, informasi servis ditampilkan.
 
+```text
+Pilih menu: 5
+
+=== CARI DATA SERVIS ===
+Masukkan ID Servis: S001
+
+Data ditemukan:
+================================
+           DATA SERVIS
+================================
+
+ID Pelanggan : P001
+Nama         : James Chao
+No Telepon   : 081234567890
+Alamat       : Samarinda
+
+Jenis        : Laptop
+ID Laptop    : L001
+Merk         : ASUS
+Tipe         : VivoBook 14
+Kerusakan    : Keyboard beberapa tombol tidak berfungsi
+Ukuran Layar (Inci) : 14 inci
+
+ID Servis    : S001
+Tanggal      : 09-09-2026
+Status       : Diproses
+Biaya        : Rp250000
+================================
+```
+
 Jika data tidak ditemukan, program menampilkan:
 
 ```text
 Data servis tidak ditemukan.
 ```
-
-[TAMBAHKAN GAMBAR DI SINI: Screenshot hasil pencarian data servis]
 
 ------------------------------------------------------------------------
 
@@ -644,35 +1370,139 @@ Data servis tidak ditemukan.
 
 Program menerapkan validasi untuk mengurangi kesalahan input.
 
-### Validasi Teks
+### Validasi Input Kosong
 
-Input teks diperiksa agar tidak kosong dan sesuai kebutuhan program.
+Validasi input kosong digunakan untuk memastikan pengguna tidak sengaja mengosongkan pengisian data.
+
+Program juga menolak input yang kosong.
+
+Contohnya:
+
+``` text
+Tanggal (DD-MM-YYYY):
+Tanggal tidak boleh kosong!
+```
+
+<img width="184" height="26" alt="kosong" src="https://github.com/user-attachments/assets/b8ad9abf-1157-409d-a7b5-f3d6de88445d" />
 
 ### Validasi Nomor Telepon
 
-Nomor telepon diperiksa agar hanya berisi angka dan memiliki panjang sesuai ketentuan program.
+Validasi nomor telepon digunakan untuk memastikan pengguna telah menginput angka untuk nomor telepon dan bukan menginput huruf ataupun simbol.
+Selain itu, memastikan pengguna menginput nomor telepon sebanyak 10-13 digit dan tidak kurang dari 10 digit.
+
+Ketika pengguna memasukkan huruf:
+
+``` text
+No Telepon: fhuiah
+Nomor telepon hanya boleh berisi angka!
+```
+
+<img width="229" height="52" alt="Screenshot 2026-09-24 073552" src="https://github.com/user-attachments/assets/722e3fe4-98c2-471d-9b91-8badeeafa7e6" />
+
+
+Ketika nomor kurang dari 10 digit:
+
+``` text
+No Telepon: 0493204
+Nomor telepon harus 10-13 digit!
+```
+
+<img width="186" height="28" alt="Screenshot 2026-09-24 073607" src="https://github.com/user-attachments/assets/a300417f-1fa1-4ca6-9eee-adf3cfc493d9" />
 
 ### Validasi Jenis Perangkat
 
-Jenis perangkat hanya dapat dipilih melalui pilihan laptop atau komputer.
+Validasi jenis perangkat digunakan untuk memastikan pengguna menginput pilihan yang tersedia di menu dan tidak menginput pilihan lain selain itu.
+
+Ketika pengguna memasukkan pilihan `3`:
+
+``` text
+Pilih jenis perangkat: 3
+Pilihan hanya 1 atau 2!
+```
+
+<img width="144" height="62" alt="Screenshot 2026-09-24 073640" src="https://github.com/user-attachments/assets/89cf593f-e6eb-4047-997d-847ea6bdd29b" />
 
 ### Validasi Status
 
 Status servis hanya dapat dipilih dari `Menunggu`, `Diproses`, atau `Selesai`.
 
+```text
+Pilih Status Proses:
+1. Menunggu
+2. Diproses
+3. Selesai
+Pilih status: 4
+Pilihan hanya 1, 2, atau 3!
+```
+
+<img width="154" height="78" alt="image" src="https://github.com/user-attachments/assets/0f2631a3-e5aa-4c1e-b5ed-5f59d508dccc" />
+
 ### Validasi Tanggal
 
-Format tanggal yang digunakan pada input dan tampilan adalah `DD-MM-YYYY`. Database MySQL menyimpan tanggal dengan tipe `DATE`, sehingga program melakukan konversi format tanggal.
+Validasi tanggal digunakan untuk memastikan pengguna menginput tanggal servis sesuai dengan format yang sudah ditentukan oleh program. Database MySQL menyimpan tanggal dengan tipe `DATE`, sehingga program melakukan konversi format tanggal. Selain itu, program memastikan pengguna untuk menginput bulan yang benar yaitu antara bulan 01-12 saja.
+
+Program menggunakan format:
+
+``` text
+DD-MM-YYYY
+```
+
+Ketika pengguna memasukkan:
+
+``` text
+04/06/2026
+```
+
+program menampilkan:
+
+``` text
+Format tanggal harus DD-MM-YYYY!
+```
+
+<img width="184" height="26" alt="format " src="https://github.com/user-attachments/assets/b8bd2c87-1f71-4deb-b837-9ed8a95df164" />
+
+
+Program juga memeriksa bulan.
+
+Contohnya:
+
+``` text
+20-13-2026
+Bulan harus 01-12!
+```
+
+<img width="184" height="26" alt="bulan" src="https://github.com/user-attachments/assets/c160ea79-f2c7-4ff8-a969-d012e4d2f324" />
 
 ### Validasi Biaya
 
-Biaya servis harus berupa angka dan memenuhi batas minimum yang ditetapkan program.
+Validasi biaya digunakan untuk memastikan biaya servis yang dimasukkan oleh pengguna berupa angka dan sesuai dengan ketentuan yang telah ditentukan. Jika pengguna memasukkan huruf, sistem akan menampilkan pesan bahwa biaya harus berupa angka.
+
+Selain itu, biaya servis yang dimasukkan harus memiliki nilai minimal Rp50.000. Jika biaya yang dimasukkan kurang dari batas tersebut, sistem akan meminta pengguna memasukkan biaya kembali.
+
+Ketika pengguna memasukkan huruf pada biaya:
+
+``` text
+Biaya: Rpabcde
+Biaya harus berupa angka!
+```
+
+<img width="149" height="53" alt="Screenshot 2026-09-24 074104" src="https://github.com/user-attachments/assets/0dc400a2-8a8b-4d89-9de3-9ea7f5bd134a" />
+
+Ketika pengguna memasukkan biaya servis yang kurang dari nominal Rp 50.000:
+
+<img width="131" height="38" alt="image" src="https://github.com/user-attachments/assets/6595e88a-f159-4f1b-bda9-b71a3c2df7e5" />
 
 ### Validasi ID
 
 Program memeriksa ID agar tidak terjadi penggunaan ID yang sama pada data baru.
 
-[TAMBAHKAN GAMBAR DI SINI: Screenshot validasi input pada terminal]
+```text
+--- DATA SERVIS ---
+ID Servis: s001
+ID Servis sudah digunakan!
+```
+
+<img width="152" height="44" alt="image" src="https://github.com/user-attachments/assets/c0645e80-1400-4b1f-9211-b4da69d5384c" />
 
 ------------------------------------------------------------------------
 
