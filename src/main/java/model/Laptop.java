@@ -19,6 +19,6 @@ public class Laptop extends Perangkat {
         System.out.println("Merk         : " + getMerk());
         System.out.println("Tipe         : " + getTipe());
         System.out.println("Kerusakan    : " + getKerusakan());
-        System.out.println("Ukuran Layar (Inci) : " + ukuranLayar + " Inci");
+        System.out.println("Ukuran Layar (Inci) : " + ukuranLayar);
     }
 }

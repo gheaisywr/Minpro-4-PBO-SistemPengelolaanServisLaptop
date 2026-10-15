@@ -1,4 +1,4 @@
-package controller;
+package validasiinput;
 
 import java.util.Scanner;
 
